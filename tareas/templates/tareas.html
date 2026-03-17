@@ -1,0 +1,22 @@
+{% extemds 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <h1 class="text-center mb-5">Mis Tareas Pendientes</h1>
+
+        {% for tarea in tareas %}
+        <a href="{% url 'tarea_detail' tarea.id %}" class="list-group-item">
+            <div class="d-flex justify-content-between">
+                {% if tarea.important %}
+                    <h5 class="text-succes fw-bold">{{ tarea.title }}</h5>
+                {% else %}
+                    <h5">{{ tarea.title }}</h5>
+                {% endif %}
+                <small>por {{ tarea.user.username }}</small>
+            </div>
+            <p>{{ tarea.description }}</p>
+        </a>
+        {% endfor%}
+    </div>
+</div>
+{% endblock %}

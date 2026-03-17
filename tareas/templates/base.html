@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Django CRUD</title>
+    <title>Django CRUD - Tareas</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -23,10 +23,15 @@
         </div>
     </nav>
 
-    <main class="container mt-5">
+    <main class="container mt-4">
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+
         {% block content %}
         {% endblock %}
     </main>
-  
 </body>
 </html>

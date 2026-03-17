@@ -26,7 +26,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-secret-key')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -116,4 +116,13 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-LOGIN_URL = '/signin/'
+# Auth settings
+# Django's built-in auth URLs add "login/" and "logout/" under the path
+# included in urls.py. We point LOGIN_URL to the actual login endpoint.
+LOGIN_URL = '/signin/login/'
+
+# After login, send users to the tasks list.
+LOGIN_REDIRECT_URL = 'tareas'
+
+# After logout, send users back to the login page.
+LOGOUT_REDIRECT_URL = 'login'

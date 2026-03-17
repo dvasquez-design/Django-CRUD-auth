@@ -1,8 +1,12 @@
-from datetime import timezone
+# Use Django's timezone utilities for timezone-aware timestamps.
+# (datetime.timezone does not provide `now()`, so importing it would break completion logic.)
+from django.utils import timezone
+
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
+
 from .models import Tarea
 from .forms import TareaForm
 
@@ -13,7 +17,10 @@ def tareas(request):
     tareas = Tarea.objects.filter(user=request.user, date_completed__isnull=True).order_by('-created')
     return render(request, 'tareas/tareas.html', {'tareas': tareas})
 
+@login_required
 def create_tarea(request):
+    """Create a new task for the logged-in user."""
+
     if request.method == 'POST':
         try:
             form = TareaForm(request.POST)
@@ -28,7 +35,10 @@ def create_tarea(request):
         form = TareaForm()
     return render(request, 'tareas/create_tarea.html', {'form': form})
 
+@login_required
 def tarea_detail(request, tarea_id):
+    """View and edit a single task. Only the owner may access this page."""
+
     tarea = get_object_or_404(Tarea, id=tarea_id, user=request.user)
     
     if request.method == 'POST':
@@ -44,14 +54,20 @@ def tarea_detail(request, tarea_id):
     
     return render(request, 'tareas/tarea_detail.html', {'tarea': tarea, 'form': form})
 
+@login_required
 def complete_tarea(request, tarea_id):
+    """Mark a task as completed."""
+
     tarea = get_object_or_404(Tarea, id=tarea_id, user=request.user)
     if request.method == 'POST':
         tarea.date_completed = timezone.now()
         tarea.save()
         return redirect('tareas')
     
+@login_required
 def delete_tarea(request, tarea_id):
+    """Delete a task owned by the current user."""
+
     tarea = get_object_or_404(Tarea, id=tarea_id, user=request.user)
     if request.method == 'POST':
         tarea.delete()

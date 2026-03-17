@@ -21,7 +21,7 @@ class Migration(migrations.Migration):
                 ('title', models.CharField(max_length=200)),
                 ('description', models.TextField()),
                 ('created', models.DateTimeField(auto_now_add=True)),
-                ('data_completed', models.DateTimeField(blank=True, null=True)),
+                ('date_completed', models.DateTimeField(blank=True, null=True)),
                 ('important', models.BooleanField(default=False)),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],

@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 offset-md-2">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">Tareas completadas</h1>
+            <a class="btn btn-primary" href="{% url 'tareas' %}">Ver pendientes</a>
+        </div>
+
+        {% if tareas %}
+            <div class="list-group">
+                {% for tarea in tareas %}
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">{{ tarea.title }}</h5>
+                            <small>completada {{ tarea.date_completed|date:'SHORT_DATETIME_FORMAT' }}</small>
+                        </div>
+                        <p class="mb-1">{{ tarea.description }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-info">No hay tareas completadas aún.</div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

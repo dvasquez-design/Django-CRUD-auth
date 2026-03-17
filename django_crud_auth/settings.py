@@ -126,3 +126,5 @@ LOGIN_REDIRECT_URL = 'tareas'
 
 # After logout, send users back to the login page.
 LOGOUT_REDIRECT_URL = 'login'
+
+STATIC_ROOT = os.path.join('BASE_DIR', 'staticfiles')
